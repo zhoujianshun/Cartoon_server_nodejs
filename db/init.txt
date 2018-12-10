@@ -1,0 +1,18 @@
+create database test; // 创建数据库
+SHOW DATABASES; // 查看数据库
+use mysql;    //选择mysql数据库
+create user 'www'@'%' identified by 'www';    //创建用户（貌似必须跟赋权语句分开）
+grant all privileges on test.* to 'www'@'%';    //授予权限
+flush privileges;    //刷新权限
+
+遇到错误 ->Client does not support authentication protocol requested by server;
+解决方法->ALTER USER 'www'@'%' IDENTIFIED WITH mysql_native_password BY 'www';
+
+
+
+create database nodejs; // 创建数据库
+SHOW DATABASES; // 查看数据库
+use mysql;    //选择mysql数据库
+create user 'www'@'%' identified by 'www';    //创建用户（貌似必须跟赋权语句分开）
+grant all privileges on nodejs.* to 'www'@'%';    //授予权限
+flush privileges;    //刷新权限

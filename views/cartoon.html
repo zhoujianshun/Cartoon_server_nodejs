@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>漫画喵</title>
+	<link href="../static/css/metro.min.css" rel="stylesheet" media="screen">
+	<script src="../static/js/util.js"></script>
+	<script src="../static/js/jquery.min.js"></script>
+	<script src="../static/js/metro.min.js"></script>
+	<style type="text/css">
+		.list a {
+			color: white;
+			font-size: 16px;
+		}
+	</style>
+</head>
+
+<body class="bg-grayLighter">
+	<h1 id="cartoon-title" style="margin: 20px auto 20px 20px"></h1>
+	<div class="listview list-type-tiles" id="list">
+    </div>
+	<div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" style="width: auto; height: auto; visibility: visible; left: 493px; top: 123.5px;">
+		<h1>{{cartoon}}</h1>
+		<p id="wrong-content">
+		</p>
+		<span class="dialog-close-button"></span>
+	</div>
+</body>
+<script>
+$(function() {
+	var cartoon = getQueryString('cartoon');
+    document.title = cartoon;
+	$('#cartoon-title').html(cartoon);
+	var list = $('#list');
+	var host = window.location.host;
+	$.getJSON('http://' + host + '/api/cartoon/' + cartoon, function(data) {
+		// if (data['code'] != 0) {
+		//     $('#wrong-content').text(JSON.stringify(data));
+        //     metroDialog.open('#dialog');
+        //     return;
+		// }
+		var chapter_list = data['chapters'];
+		chapter_list.forEach(function(data) {
+			list.append('<div class="list bg-grayLight"><a href="cartoons/chapter?cartoon=' + cartoon + '&chapter=' + data + '" ><div><span class="list-title">' + data + '</span></div></a></div>')
+		});
+	});
+
+});
+
+</script>
+</html>

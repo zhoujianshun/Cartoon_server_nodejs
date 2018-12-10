@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "mime": "^2.4.0",
+    "mocha": "^5.2.0",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.4",
+    "mz": "^2.7.0",
+    "node-uuid": "^1.4.8",
+    "nunjucks": "^3.1.4",
+    "sequelize": "^4.41.2"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  }
+}

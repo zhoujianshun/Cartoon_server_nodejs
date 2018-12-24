@@ -8,6 +8,7 @@
     <script src="../static/js/metro.min.js"></script>
 	<script src="../static/js/lazeload.js"></script>
 	<script src="../static/js/util.js"></script>
+	<script src="../static/js/echo.min.js"></script>
 	<style>
 		#img-list {
 			width: 960px;
@@ -27,7 +28,13 @@
 	</style>
 </head>
 <body class="bg-grayLight">
-<div id="img-list"></div>
+<div id="img-list">
+		{% for file in files %}
+		
+		<p><img class="lazy"  src="./img/loading.png" data-echo="{{ file }}"/></p>
+
+		{% endfor %}
+</div>
 <div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" style="width: auto; height: auto; visibility: visible; left: 493px; top: 123.5px;">
     <h1>Wrong</h1>
     <p id="wrong-content">
@@ -43,21 +50,26 @@ $(function() {
 	document.title = chapter + ' - ' + cartoon;
 
 	var host = window.location.host;
-	$.getJSON('http://' + host + '/api/cartoon/' + cartoon + '/' + chapter,
-		function (data) {
-	        // if (data['code'] != 0) {
-            //     $('#wrong-content').text(JSON.stringify(data));
-            //     metroDialog.open('#dialog');
-            //     return;
-            // }
-			var urls = data['images'];
-			urls.forEach(function (url) {
-				img_list.append(
-					'<p><img src="./img/loading.png" lazy-src="http://'+ host + url +'"/></p>'
-					);
-			});
-			new LazyLoad().init();
-		});
+
+	Echo.init({
+    offset: 0,//离可视区域多少像素的图片可以被加载
+　　 throttle: 0 //图片延时多少毫秒加载
+}); 
+	// $.getJSON('http://' + host + '/api/cartoon/' + cartoon + '/' + chapter,
+	// 	function (data) {
+	//         // if (data['code'] != 0) {
+    //         //     $('#wrong-content').text(JSON.stringify(data));
+    //         //     metroDialog.open('#dialog');
+    //         //     return;
+    //         // }
+	// 		var urls = data['images'];
+	// 		urls.forEach(function (url) {
+	// 			img_list.append(
+	// 				'<p><img src="./img/loading.png" lazy-src="' + url +'"/></p>'
+	// 				);
+	// 		});
+	// 		new LazyLoad().init();
+	// 	});
 });
 </script>
 </body>

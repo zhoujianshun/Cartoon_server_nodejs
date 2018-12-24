@@ -20,7 +20,9 @@
 		<p>这是一个十分简易的用于本地浏览的漫画的网站，希望你能喜欢</p>
 	</div>
 	<div class="listview list-type-tiles" id='list'>
-
+		{% for cartoon in cartoons %}
+		<div class="list bg-grayLight"><a href="/cartoons?cartoon={{cartoon}}"  target="_blank"><div><span class="list-title">{{cartoon}}</span></div></a></div>
+		{% endfor %}
 	</div>
 	<div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" style="width: auto; height: auto; visibility: visible; left: 493px; top: 123.5px;">
 		<h1>Wrong</h1>
@@ -33,19 +35,19 @@
 
 	$(function () {
         var host = window.location.host;
-		$.getJSON('http://'+ host + '/api/cartoons', function (data) {
-		    // if (data['code'] != 0) {
-            //     metroDialog.open('#dialog');
-            //     return;
-            // }
+		// $.getJSON('http://'+ host + '/api/cartoons', function (data) {
+		//     // if (data['code'] != 0) {
+        //     //     metroDialog.open('#dialog');
+        //     //     return;
+        //     // }
 
-            var cartoon_list = data['cartoons'];
+        //     var cartoon_list = data['cartoons'];
     
-			var list = $('#list');
-			cartoon_list.forEach(function(data) {
-				list.append('<div class="list bg-grayLight"><a href="/cartoons?cartoon='+data+'" target="_blank"><div><span class="list-title">'+ data +'</span></div></a></div>');
-			});
-		});
+		// 	var list = $('#list');
+		// 	cartoon_list.forEach(function(data) {
+		// 		list.append('<div class="list bg-grayLight"><a href="/cartoons?cartoon='+data+'" target="_blank"><div><span class="list-title">'+ data +'</span></div></a></div>');
+		// 	});
+		// });
 	});
 </script>
 </html>

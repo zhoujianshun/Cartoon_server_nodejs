@@ -18,6 +18,9 @@
 <body class="bg-grayLighter">
 	<h1 id="cartoon-title" style="margin: 20px auto 20px 20px"></h1>
 	<div class="listview list-type-tiles" id="list">
+			{% for chapter in chapters %}
+			<div class="list bg-grayLight"><a href="cartoons/chapter?cartoon={{ cartoonName }}&chapter={{ chapter }}" ><div><span class="list-title">{{ chapter }}</span></div></a></div>
+			{% endfor %}
     </div>
 	<div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" style="width: auto; height: auto; visibility: visible; left: 493px; top: 123.5px;">
 		<h1>{{cartoon}}</h1>
@@ -33,17 +36,17 @@ $(function() {
 	$('#cartoon-title').html(cartoon);
 	var list = $('#list');
 	var host = window.location.host;
-	$.getJSON('http://' + host + '/api/cartoon/' + cartoon, function(data) {
-		// if (data['code'] != 0) {
-		//     $('#wrong-content').text(JSON.stringify(data));
-        //     metroDialog.open('#dialog');
-        //     return;
-		// }
-		var chapter_list = data['chapters'];
-		chapter_list.forEach(function(data) {
-			list.append('<div class="list bg-grayLight"><a href="cartoons/chapter?cartoon=' + cartoon + '&chapter=' + data + '" ><div><span class="list-title">' + data + '</span></div></a></div>')
-		});
-	});
+	// $.getJSON('http://' + host + '/api/cartoon/' + cartoon, function(data) {
+	// 	// if (data['code'] != 0) {
+	// 	//     $('#wrong-content').text(JSON.stringify(data));
+    //     //     metroDialog.open('#dialog');
+    //     //     return;
+	// 	// }
+	// 	var chapter_list = data['chapters'];
+	// 	chapter_list.forEach(function(data) {
+	// 		list.append('<div class="list bg-grayLight"><a href="cartoons/chapter?cartoon=' + cartoon + '&chapter=' + data + '" ><div><span class="list-title">' + data + '</span></div></a></div>')
+	// 	});
+	// });
 
 });
 

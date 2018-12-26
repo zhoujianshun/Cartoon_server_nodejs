@@ -30,7 +30,7 @@
 <div id="img-list">
 		{% for file in files %}
 		
-		<p><img class="lazyload"  src="../static/img/loading.png" data-src="{{ file }}"/></p>
+		<p><img class="lazyload"  src="../static/img/loading.png" data-original="{{ file }}"/></p>
 
 		{% endfor %}
 </div>
@@ -50,22 +50,28 @@ $(function() {
 
 	var host = window.location.host;
 
-	 lazyload();
-
+	$(function() {
+          $("img").lazyload({ 
+                 effect: "fadeIn"
+           });  
+	  });
+	
+  
+// 无效不是，图片懒加载
 	// $.getJSON('http://' + host + '/api/cartoon/' + cartoon + '/' + chapter,
 	// 	function (data) {
 	//         // if (data['code'] != 0) {
     //         //     $('#wrong-content').text(JSON.stringify(data));
     //         //     metroDialog.open('#dialog');
     //         //     return;
-    //         // }
+	// 		// }
 	// 		var urls = data['images'];
 	// 		urls.forEach(function (url) {
 	// 			img_list.append(
-	// 				'<p><img src="./img/loading.png" lazy-src="' + url +'"/></p>'
+	// 				'<p><img class="lazyload"  src="../static/img/loading.png" data-original="'+ url +'"/></p>'
 	// 				);
 	// 		});
-	// 		new LazyLoad().init();
+	
 	// 	});
 });
 </script>

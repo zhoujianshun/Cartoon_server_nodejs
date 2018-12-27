@@ -1,14 +1,19 @@
 import re #正则
 import urllib.parse # url解析
 import requests  # python3 -m pip install requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # python3 -m pip install BeautifulSoup4  
+#还需要安装lxml。 pip install lxml
 
 import os # 路径 https://www.cnblogs.com/yanglang/p/7610838.html
+import time
 
+headers ={"User-Agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"}
+
+# s = requests.Session()
 
 class Cartoon(object):
     def __init__(self, name, sections):
-        self.name = name
+        self.name = 'AAA'
         self.sections = sections
 
     def print_info(self):
@@ -16,7 +21,7 @@ class Cartoon(object):
     
     def createDir(self):
         cwd=os.getcwd()
-        path = cwd + "/" + self.name
+        path = os.path.join(cwd, self.name)
         print(cwd)
        
         if os.path.exists(path):
@@ -25,7 +30,7 @@ class Cartoon(object):
             os.mkdir(path)
     def cartoonDirPath(self):
         cwd=os.getcwd()
-        path = cwd + "/" + self.name
+        path = os.path.join(cwd, self.name)
         return path
 
 class Section(object):
@@ -37,14 +42,16 @@ class Section(object):
         print("setion name:%s, setionu rl: %s" % (self.name, self.url))#查标签的href值
 
     def sectionDirPath(self, rootPath):
-        return rootPath + "/" + self.name
+        path = os.path.join(rootPath, self.name)
+        return path
+
 
 def createCartoon(url):   
     parsed = urllib.parse.urlparse(url)
     hostname = parsed.hostname
     print(hostname)
 
-    respose=requests.get(url)
+    respose=s.get(url, headers = headers)
 
     # print(respose.text)
     # print(respose.status_code)# 响应的状态码
@@ -70,20 +77,26 @@ def createCartoon(url):
         #section.print_info()
         sections.append(section)
 
+    respose.close()
     return Cartoon(cartoonName, sections)
 
 
 
 def downloadSection(section, sectionDirPath):
+
     if os.path.exists(sectionDirPath):
         print(sectionDirPath)
     else:
-        os.mkdir(sectionDirPath)
+        print('1213')
+        print(sectionDirPath)
+        os.makedirs(sectionDirPath)
 
-    response =requests.get(section.url)
+    response =s.get(section.url, headers = headers )
     soup = BeautifulSoup(response.text,'lxml')
     tags = soup.find_all(attrs={"class": "uk-text-center mb0"})
+    response.close()
     for tag in tags:
+        time.sleep(1)
         index = tag.div.string
         url = tag.img["src"]
     
@@ -92,14 +105,21 @@ def downloadSection(section, sectionDirPath):
         # [fname,fename]=os.path.splitext(url)
         # print(fname,"\n",fename) # 分离扩展名
 
-        filePath = sectionDirPath + '/' + filename
+        filePath = os.path.join(sectionDirPath, filename)
         try:
             print("开始下载第%s章, 第%s页" % (section.name, filename))
-            pic = requests.get(url, timeout = 30)
+            pic = s.get(url,headers = headers, timeout = 30)
             with open(filePath, 'wb') as file:
                 file.write(pic.content)
+                file.close()
+            pic.close()
         except  Exception as ex:
+            print(ex)
             print("【错误】下载第%s章, 第%s页, 当前图片无法下载:%s" % (section.name, filename, url))
+            # errorFilePath = os.path.join(sectionDirPath, 'error.txt')
+            # with open(errorFilePath, 'wb') as file:
+            #     file.writeLine(url)
+            #     file.close()
             continue
 
     print("第%s章下载完成" % (section.name))
@@ -108,14 +128,19 @@ def downloadSection(section, sectionDirPath):
 
 
 cartoonUrl = 'http://www.zerobyw.com/plugin.php?id=jameson_manhua&a=bofang&kuid=513'
-cartoon = createCartoon(cartoonUrl)
-cartoon.createDir()
+# cartoon = createCartoon(cartoonUrl)
+# cartoon.createDir()
 #cartoon.print_info()
 
 # section = cartoon.sections[0]
 # section.print_info()
 
-for section in cartoon.sections:
-    cartoonDirPath = cartoon.cartoonDirPath()
-    sectionDirPath = section.sectionDirPath(cartoonDirPath)
-    downloadSection(section, sectionDirPath)
+
+s = requests.Session()
+s.get(cartoonUrl, headers = headers)
+#time.sleep(1)
+s.get('http://mhua.zerobyw.com/manhua/GrandBlue/1-4/010.jpg', headers = headers)
+# for section in cartoon.sections:
+#     cartoonDirPath = cartoon.cartoonDirPath()
+#     sectionDirPath = section.sectionDirPath(cartoonDirPath)
+#     downloadSection(section, sectionDirPath)

@@ -21,7 +21,9 @@ s = requests.Session()
 
 class Cartoon(object):
     def __init__(self, name, sections):
-        self.name = name
+        index = name.index("】")
+        print(index)
+        self.name = name[0 : index]
         self.sections = sections
 
     def print_info(self):

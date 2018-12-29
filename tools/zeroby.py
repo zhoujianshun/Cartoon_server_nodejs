@@ -23,7 +23,7 @@ class Cartoon(object):
     def __init__(self, name, sections):
         index = name.index("】")
         print(index)
-        self.name = name[0 : index]
+        self.name = name[0 : index + 1]
         self.sections = sections
 
     def print_info(self):
@@ -147,6 +147,43 @@ def downloadFile(url, targetPath, timeout=30):
         file.write(pic.content)
         file.close()
     pic.close()
+
+
+import shutil
+def redownloadErrorFile(errorFilePath):
+    s.get("http://www.zerobyw.com", headers=headers, timeout=30)
+    dir = os.path.dirname(errorFilePath)
+    print(dir)
+
+    if os.path.exists(errorFilePath):
+        f = open(errorFilePath,"r",encoding="utf-8")
+        newFilePath =  errorFilePath + '.new'
+        f_w = open( newFilePath, "w",encoding="utf-8")
+        hasError = False
+        for line in f:
+            print("开始下载:%s" % (line))
+            url = line.strip()
+            [dirname, filename] = os.path.split(url)
+            filePath = os.path.join(dir, filename)
+            print(filePath)
+            try:
+                downloadFile(url, filePath)
+            except Exception as ex:
+                print(ex)
+                hasError = True
+                f_w.write(line)
+                continue     
+        f.close()
+        f_w.close()
+        
+        if hasError :
+            shutil.move(newFilePath, errorFilePath)
+        else:
+            os.remove(errorFilePath)
+            os.remove(newFilePath)
+            
+    else:
+        print('file: %s, not exits' % filePath)
 
 
 #s = requests.Session()

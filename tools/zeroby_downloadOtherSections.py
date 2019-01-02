@@ -1,10 +1,13 @@
 import zeroby 
 import os
 
+
+import zeroUrl
+
 sections = []
 
-# cartoonUrl = 'http://www.zerobyw.com/plugin.php?id=jameson_manhua&c=index&a=bofang&kuid=965'
-cartoonUrl = 'http://www.zerobyw.com/plugin.php?id=jameson_manhua&a=bofang&kuid=513' #碧蓝
+
+cartoonUrl =  zeroUrl.getCartoonUrl()
 
 cartoon = zeroby.createCartoon(cartoonUrl)
 cartoon.createDir()

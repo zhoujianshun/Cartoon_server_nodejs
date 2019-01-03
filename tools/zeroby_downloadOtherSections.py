@@ -12,6 +12,7 @@ cartoonUrl =  zeroUrl.getCartoonUrl()
 cartoon = zeroby.createCartoon(cartoonUrl)
 cartoon.createDir()
 cartoonDirPath = cartoon.cartoonDirPath()
+cartoon.downloadCover()
 
 # for dirs in os.walk(cartoonDirPath):
 #     print(dirs)

@@ -6,8 +6,11 @@ import zeroUrl
 
 cartoonUrl = zeroUrl.getCartoonUrl()
 
+
 cartoon = zeroby.createCartoon(cartoonUrl)
+cartoon.print_info()
 cartoon.createDir()
+cartoon.downloadCover()
 
 for section in cartoon.sections:
     cartoonDirPath = cartoon.cartoonDirPath()

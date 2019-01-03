@@ -27,8 +27,8 @@ class Cartoon(object):
         self.sections = sections
 
     def print_info(self):
-        print("cartoon name: %s, sections count: %i" %
-              (self.name, len(self.sections)))
+        print("cartoon name: %s, sections count: %i, cover: %s" %
+              (self.name, len(self.sections), self.coverUrl))
 
     def createDir(self):
         path = self.cartoonDirPath()
@@ -41,6 +41,21 @@ class Cartoon(object):
         cwd = os.getcwd()
         path = os.path.join(cwd, 'store', self.name)
         return path
+
+    @property
+    def coverUrl(self):
+        return self._coverUrl
+    
+    @coverUrl.setter
+    def coverUrl(self, value):
+        self._coverUrl = value
+
+    def downloadCover(self):
+        if self.coverUrl:
+            dirPath = self.cartoonDirPath()
+            targetPath = os.path.join(dirPath,'cover.jpg')
+            downloadFile(self.coverUrl, targetPath)
+
 
 
 class Section(object):
@@ -76,6 +91,7 @@ def createCartoon(url):
     # print(urls)
 
     soup = BeautifulSoup(respose.text, 'lxml')
+    respose.close()
     print(soup.title)
     cartoonName = soup.title.string
     print("cartoonName: "+cartoonName)
@@ -92,8 +108,16 @@ def createCartoon(url):
         # section.print_info()
         sections.append(section)
 
-    respose.close()
-    return Cartoon(cartoonName, sections)
+    cartoon = Cartoon(cartoonName, sections)
+
+    # 封面
+    tag2 = soup.find(attrs={"class": "bofangwrap rootcate uk-margin-top uk-grid-collapse"})
+    coverUrl = tag2.div.div.div.img["src"]
+    # print(coverUrl)
+    cartoon.coverUrl = coverUrl
+
+    
+    return cartoon
 
 
 def downloadSection(section, sectionDirPath):
@@ -149,9 +173,10 @@ def downloadFile(url, targetPath, timeout=30):
     pic.close()
 
 
+# 解析目录中的error.txt 文件，重新下载其中的链接
 import shutil
 def redownloadErrorFile(errorFilePath):
-    s.get("http://www.zerobyw.com", headers=headers, timeout=30)
+    # s.get("http://www.zerobyw.com", headers=headers, timeout=30)
     dir = os.path.dirname(errorFilePath)
     print(dir)
 

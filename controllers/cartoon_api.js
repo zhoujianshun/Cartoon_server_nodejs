@@ -5,7 +5,9 @@ const carttons = require('../services/cartoons');
 
 module.exports = {
     'GET /api/cartoons': async (ctx, next) => {
-        let allCartoons = await carttons.getAllCartoons();
+        // console.log(ctx.request.origin);
+        
+        let allCartoons = await carttons.getAllCartoons(ctx.request.origin);
         let result = { 'cartoons': allCartoons };
         ctx.rest(result);
     },

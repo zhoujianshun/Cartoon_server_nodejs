@@ -104,7 +104,28 @@ async function getAllFilesPath(targetPath) {
 module.exports = {
     getAllCartoons: async () => {
         let dirs = await getAllDirName(cartoonRootPath);
+        // let cartoons = []
+        // for (const cartoonName of dirs) {
+        //     let cartoonName = 
+        // }
         return dirs;
+    },
+    getAllCartoons: async (origin) => {
+        let dirs = await getAllDirName(cartoonRootPath);
+        let cartoons = [];
+        for (const cartoonName of dirs) {
+            let coverName = 'cover.jpg';
+            let filePath = path.join(cartoonRootPath, cartoonName, coverName)
+            let url =  `${origin}${cartoonRelativePath}/${cartoonName}/${coverName}`
+            console.log(filePath);
+            console.log(url);
+           if( fs.existsSync(filePath)){
+                cartoons.push({'cartoonName':cartoonName,'coverUrl':url})
+           }else{
+                cartoons.push({'cartoonName':cartoonName})
+           }
+        }
+        return cartoons;
     },
     getCartoonChapters: async (cartoonName) => {
         let dirs = await getAllDirName(path.join(cartoonRootPath, cartoonName));

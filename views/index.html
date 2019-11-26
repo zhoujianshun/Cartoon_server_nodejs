@@ -1,27 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>漫画</title>
-	<link href="static/css/metro.min.css" rel="stylesheet" media="screen">
+	<!-- <link href="static/css/metro.min.css" rel="stylesheet" media="screen"> -->
+	<link href="static/css/reset.css" rel="stylesheet">
 	<script src="static/js/jquery.min.js"></script>
-	<script src="static/js/metro.min.js"></script>
+	<!-- <script src="static/js/metro.min.js"></script> -->
 	<style>
-		.list a {
+		/* .list a {
 			color: white;
 			font-size: 16px;
+		} */
+		.main {
+			width: 100%;
+
 		}
+
+		.main-in {
+			width: 800px;
+			margin: 0 auto;
+		}
+
+		.main-in .item {
+			float: left;
+			width: 150px;
+			height: 200px;
+			background: #eeeeee;
+			margin: 0 0 20px 20px;
+
+		}
+
+		.main-in .item-top{
+			width: 100%;
+			height: 160px;
+		}
+		.main-in .item-top img{
+			width: 100%;
+			height: 160px;
+			background: #cccccc; 
+			/* background: blue */
+		}
+
+		.main-in .item-bottom {
+			width: 100%;
+			height: 40px;
+			/* background: aqua; */
+			padding: 10px;
+			box-sizing: border-box;
+
+			/* line-height: 40px; */
+			color: #222222;
+			font-size: 12px;
+			text-overflow: ellipsis;
+    		white-space: nowrap;
+			overflow: hidden;
+		}
+
+		/* .main-in .item-bottom .span{
+			
+		} */
 	</style>
 </head>
+
 <body class="bg-grayLighter">
-	<h1 style="margin: 20px auto 20px 20px">自己的漫画站点</h1>
+	<div class="main">
+		<div class="main-in">
+
+
+				{% for cartoon in cartoons %}
+				<!-- <div class="list bg-grayLight"><a href="/cartoons?cartoon={{cartoon.cartoonName}}"  target="_blank"><div><span class="list-title">{{cartoon.cartoonName}}</span></div></a></div> -->
+				<div class="item">
+						<a href="/cartoons?cartoon={{cartoon.cartoonName}}">
+							<div class="item-top">
+								<img src="{{cartoon.coverUrl}}" alt="" title="{{cartoon.cartoonName}}">
+							</div>
+							<div class="item-bottom">
+									{{cartoon.cartoonName}}
+							</div>
+		
+						</a>
+					</div>
+				
+				
+				{% endfor %}
+	
+
+
+		</div>
+
+
+
+	</div>
+
+	<!-- <h1 style="margin: 20px auto 20px 20px">自己的漫画站点</h1>
 	<div style="margin-left: 20px">
 		<p>开始你的漫画之旅</p>
 		<p>这是一个十分简易的用于本地浏览的漫画的网站，希望你能喜欢</p>
 	</div>
 	<div class="listview list-type-tiles" id='list'>
 		{% for cartoon in cartoons %}
-		<div class="list bg-grayLight"><a href="/cartoons?cartoon={{cartoon}}"  target="_blank"><div><span class="list-title">{{cartoon}}</span></div></a></div>
+		<div class="list bg-grayLight"><a href="/cartoons?cartoon={{cartoon.cartoonName}}"  target="_blank"><div><span class="list-title">{{cartoon.cartoonName}}</span></div></a></div>
 		{% endfor %}
 	</div>
 	<div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" data-overlay="true" data-overlay-color="op-dark" data-overlay-click-close="true" style="width: auto; height: auto; visibility: visible; left: 493px; top: 123.5px;">
@@ -29,20 +109,20 @@
 		<p id="wrong-content">
 		</p>
 		<span class="dialog-close-button"></span>
-	</div>
+	</div> -->
 </body>
 <script>
 
 	$(function () {
-        var host = window.location.host;
+		var host = window.location.host;
 		// $.getJSON('http://'+ host + '/api/cartoons', function (data) {
 		//     // if (data['code'] != 0) {
-        //     //     metroDialog.open('#dialog');
-        //     //     return;
-        //     // }
+		//     //     metroDialog.open('#dialog');
+		//     //     return;
+		//     // }
 
-        //     var cartoon_list = data['cartoons'];
-    
+		//     var cartoon_list = data['cartoons'];
+
 		// 	var list = $('#list');
 		// 	cartoon_list.forEach(function(data) {
 		// 		list.append('<div class="list bg-grayLight"><a href="/cartoons?cartoon='+data+'" target="_blank"><div><span class="list-title">'+ data +'</span></div></a></div>');
@@ -50,4 +130,5 @@
 		// });
 	});
 </script>
+
 </html>

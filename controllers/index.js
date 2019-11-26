@@ -2,7 +2,8 @@ const carttons = require('../services/cartoons');
 const querystring = require("querystring");
 
 var fn_index = async (ctx, next) => {
-    let allCartoons = await carttons.getAllCartoons();
+    let origin = ctx.origin;
+    let allCartoons = await carttons.getAllCartoons(origin);
     ctx.render('index.html', {
         title: 'Welcome',
         cartoons: allCartoons
@@ -24,7 +25,7 @@ var fn_cartoon_chapter = async (ctx, next) => {
     let cartton = queryResult.cartoon;
     let chapter = queryResult.chapter;
     let origin = ctx.origin;
-    let result = await carttons.getCartoonChapter(origin, cartton, chapter);
+    let result = await carttons.getCartoonChapter(origin, cartton, chapter, false);
 
     ctx.render('chapter.html', {
         files: result.files,

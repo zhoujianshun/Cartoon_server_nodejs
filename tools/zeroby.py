@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup  # python3 -m pip install BeautifulSoup4
 # 还需要安装lxml。 pip install lxml
 # https://blog.csdn.net/Ka_Ka314/article/details/80999803
 # https://www.cnblogs.com/chimeiwangliang/p/8649003.html
-https://www.cnblogs.com/chimeiwangliang/p/8649003.html
 
 import os  # 路径 https://www.cnblogs.com/yanglang/p/7610838.html
 import time
@@ -167,10 +166,11 @@ def downloadSection(section, sectionDirPath):
 
 def downloadFile(url, targetPath, timeout=30):
     pic = s.get(url, headers=headers, timeout=timeout)
-    with open(targetPath, 'wb') as file:
-        file.write(pic.content)
-        file.close()
-    pic.close()
+    if pic.status_code == 200:
+        with open(targetPath, 'wb') as file:
+            file.write(pic.content)
+            file.close()
+        pic.close()
 
 
 # 解析目录中的error.txt 文件，重新下载其中的链接

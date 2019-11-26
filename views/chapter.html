@@ -30,7 +30,7 @@
 <div id="img-list">
 		{% for file in files %}
 		
-		<p><img class="lazyload"  src="../static/img/loading.png" data-original="{{ file }}"/></p>
+		<p><img class="lazyload"  src="../static/img/loading.png" data-original="{{ file.url }}"/></p>
 
 		{% endfor %}
 </div>

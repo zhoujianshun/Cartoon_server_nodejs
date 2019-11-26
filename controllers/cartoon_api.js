@@ -14,8 +14,8 @@ module.exports = {
     'GET /api/cartoon/:name': async (ctx, next) => {
         var cartoonName = ctx.params.name;
         if (cartoonName) {
-            let cartton = await carttons.getCartoonChapters(cartoonName);
-            let result = { 'chapters': cartton.chapters };
+            let cartton = await carttons.getCartoonChapters(cartoonName, ctx.request.origin);
+            let result = cartton;
             ctx.rest(result);
         } else {
             throw new APIError('missing_param', 'missing param : name');
@@ -32,7 +32,7 @@ module.exports = {
             throw new APIError('missing_param', 'missing param : chapter');
         }
         let origin = ctx.origin;
-        let chapter = await carttons.getCartoonChapter(origin, cartoonName, chapterName);
+        let chapter = await carttons.getCartoonChapter(origin, cartoonName, chapterName, true);
         ctx.rest({ 'images': chapter.files });
     }
 };

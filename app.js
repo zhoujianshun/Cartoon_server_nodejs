@@ -51,6 +51,8 @@ app.use(rest.restify('/api/'));
 // 最后处理URL路由
 app.use(controller('/controllers'));
 
-
+//"127.0.0.1"
 app.listen(3000);
+
+// app.listen(3000,"192.168.1.68");
 console.log('app started at port 3000...');

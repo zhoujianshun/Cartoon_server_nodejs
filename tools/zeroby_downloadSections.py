@@ -1,11 +1,12 @@
 import zeroby 
 import zeroUrl
 
-sections = ["1"]
+sections = ["10",'11']
 
 cartoonUrl = zeroUrl.getCartoonUrl()
 
 cartoon = zeroby.createCartoon(cartoonUrl)
+
 cartoon.createDir()
 cartoon.downloadCover()
 

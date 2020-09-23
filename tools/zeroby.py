@@ -55,6 +55,8 @@ class Cartoon(object):
             targetPath = os.path.join(dirPath,'cover.jpg')
             downloadFile(self.coverUrl, targetPath)
 
+    
+
 
 
 class Section(object):
@@ -73,7 +75,29 @@ class Section(object):
 
 ####################################################
 
+def zerobyLogin(account, password):
+    # 马蜂窝模仿 登录
+    print("开始模拟登录")
+
+    postUrl = "http://www.zerobywpor.com/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes"
+    postData = {
+        "fastloginfield":"username",
+        "username": account,
+        "password": password,
+        "quickforward": "yes",
+        "handlekey": "ls",
+    }
+    # 使用session直接post请求
+    responseRes = s.post(postUrl, data = postData, headers = headers)
+    # 无论是否登录成功，状态码一般都是 statusCode = 200
+    print(f"statusCode = {responseRes.status_code}")
+    # print(f"text = {responseRes.text}")
+    # 登录成功之后，将cookie保存在本地文件中，好处是，以后再去获取马蜂窝首页的时候，就不需要再走mafengwoLogin的流程了，因为已经从文件中拿到cookie了
+    # s.cookies.save()
+
+
 def createCartoon(url):
+    zerobyLogin("xx","xx")
     parsed = urllib.parse.urlparse(url)
     hostname = parsed.hostname
     print(hostname)
@@ -115,7 +139,6 @@ def createCartoon(url):
     # print(coverUrl)
     cartoon.coverUrl = coverUrl
 
-    
     return cartoon
 
 

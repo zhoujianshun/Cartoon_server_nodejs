@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title>cartoon-web-vue</title>
+
+    <script>
+      const scale = 1.0 / window.devicePixelRatio;
+      // const scale = 1.0;
+      const text = '<meta name="viewport" content="width=device-width, initial-scale='+scale+', maximum-scale='+scale+', minimum-scale='+scale+', user-scalable=no">';
+      document.write(text);
+      // console.log("innerWidth ---> " + window.innerWidth);
+      // 设计稿宽度是375
+      document.documentElement.style.fontSize = window.innerWidth / 3.75 + "px"; // 设计图为375
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but cartoon-web-vue doesn't work properly without
+        JavaScript enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

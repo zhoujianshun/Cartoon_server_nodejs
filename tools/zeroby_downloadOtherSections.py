@@ -2,12 +2,12 @@ import zeroby
 import os
 
 
-import zeroUrl
+import zeroConfigs
 
 sections = []
 
 
-cartoonUrl =  zeroUrl.getCartoonUrl()
+cartoonUrl =  zeroConfigs.getCartoonUrl()
 
 cartoon = zeroby.createCartoon(cartoonUrl)
 cartoon.createDir()

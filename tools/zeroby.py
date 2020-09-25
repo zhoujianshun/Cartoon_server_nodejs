@@ -12,6 +12,8 @@ from bs4 import BeautifulSoup  # python3 -m pip install BeautifulSoup4
 import os  # 路径 https://www.cnblogs.com/yanglang/p/7610838.html
 import time
 
+import zeroConfigs
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"}
 
@@ -38,7 +40,9 @@ class Cartoon(object):
 
     def cartoonDirPath(self):
         cwd = os.getcwd()
-        path = os.path.join(cwd, 'store', self.name)
+        # path = os.path.join(cwd, 'store', self.name)
+        dirName = zeroConfigs.getRelativeDirName()
+        path = os.path.join(cwd, dirName, self.name)
         return path
 
     @property
@@ -97,7 +101,9 @@ def zerobyLogin(account, password):
 
 
 def createCartoon(url):
-    zerobyLogin("xx","xx")
+    username = zeroConfigs.getUserName()
+    password = zeroConfigs.getPassword()
+    zerobyLogin(username,password)
     parsed = urllib.parse.urlparse(url)
     hostname = parsed.hostname
     print(hostname)

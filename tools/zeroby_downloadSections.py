@@ -1,9 +1,9 @@
 import zeroby 
-import zeroUrl
+import zeroConfigs
 
 sections = ["10",'11']
 
-cartoonUrl = zeroUrl.getCartoonUrl()
+cartoonUrl = zeroConfigs.getCartoonUrl()
 
 cartoon = zeroby.createCartoon(cartoonUrl)
 

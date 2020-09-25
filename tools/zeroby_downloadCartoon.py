@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import zeroby
-import zeroUrl
+import zeroConfigs
 
-cartoonUrl = zeroUrl.getCartoonUrl()
+cartoonUrl = zeroConfigs.getCartoonUrl()
 
 
 cartoon = zeroby.createCartoon(cartoonUrl)
